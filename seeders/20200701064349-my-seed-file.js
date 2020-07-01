@@ -27,7 +27,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }], {})
-    await queryInterface.bulkInsert('Restaurants',
+    return queryInterface.bulkInsert('Restaurants',
       Array.from({ length: 50 }).map(d =>
         ({
           name: faker.name.findName(),
@@ -44,6 +44,6 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     queryInterface.bulkDelete('Users', null, {})
-    await queryInterface.bulkDelete('Restaurants', null, {})
+    return queryInterface.bulkDelete('Restaurants', null, {})
   }
 }

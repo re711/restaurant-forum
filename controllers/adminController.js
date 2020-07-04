@@ -18,8 +18,8 @@ const adminController = {
   },
 
   postRestaurant: (req, res) => {
-    if (!req.body.name) {
-      req.flash('error_messages', '名字不存在！')
+    if (!req.body.name || !req.body.description) {
+      req.flash('error_messages', '最少要填入餐廳名子與介紹！')
       return res.redirect('back')
     }
 
@@ -68,8 +68,8 @@ const adminController = {
   },
 
   putRestaurant: (req, res) => {
-    if (!req.body.name) {
-      req.flash('error_messages', '名字不存在！')
+    if (!req.body.name || !req.body.description) {
+      req.flash('error_messages', '最少要填入餐廳名子與介紹！')
       return res.redirect('back')
     }
 

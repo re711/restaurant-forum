@@ -28,8 +28,9 @@ const adminController = {
   },
 
   postRestaurant: (req, res) => {
-    if (!req.body.name || !req.body.description) {
-      req.flash('error_messages', '最少要填入餐廳名子與介紹！')
+    const { name, description, categoryId } = req.body
+    if (!name || description || categoryId) {
+      req.flash('error_messages', '最少要填入餐廳名子、類別與介紹！')
       return res.redirect('back')
     }
 
@@ -43,7 +44,8 @@ const adminController = {
           address: req.body.address,
           opening_hours: req.body.opening_hours,
           description: req.body.description,
-          image: file ? img.data.link : null
+          image: file ? img.data.link : null,
+          CategoryId: req.body.categoryId 
         }).then(restaurant => {
           req.flash('success_messages', '餐廳已成功創建')
           return res.redirect('/admin/restaurants')
@@ -56,7 +58,8 @@ const adminController = {
         address: req.body.address,
         opening_hours: req.body.opening_hours,
         description: req.body.description,
-        image: null
+        image: null,
+        CategoryId: req.body.categoryId
       })
         .then(restaurant => {
           req.flash('success_messages', '餐廳已成功創建')
@@ -88,8 +91,9 @@ const adminController = {
   },
 
   putRestaurant: (req, res) => {
-    if (!req.body.name || !req.body.description) {
-      req.flash('error_messages', '最少要填入餐廳名子與介紹！')
+    const { name, description, categoryId } = req.body
+    if (!name || description || categoryId) {
+      req.flash('error_messages', '最少要填入餐廳名子、類別與介紹！')
       return res.redirect('back')
     }
 
@@ -105,7 +109,8 @@ const adminController = {
               address: req.body.address,
               opening_hours: req.body.opening_hours,
               description: req.body.description,
-              image: file ? img.data.link : restaurant.image
+              image: file ? img.data.link : restaurant.image,
+              CategoryId: req.body.categoryId
             })
               .then(restaurant => {
                 req.flash('success_messages', '餐廳已成功更新')
@@ -122,7 +127,8 @@ const adminController = {
             address: req.body.address,
             opening_hours: req.body.opening_hours,
             description: req.body.description,
-            image: restaurant.image
+            image: restaurant.image,
+            CategoryId: req.body.categoryId
           })
             .then(restaurant => {
               req.flash('success_messages', '餐廳已成功更新')

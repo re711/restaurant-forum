@@ -36,10 +36,13 @@ module.exports = (app, passport) => {
   app.put('/admin/restaurants/:id', authenticatedAdmin, upload.single('image'), adminController.putRestaurant)
   app.delete('/admin/restaurants/:id', authenticatedAdmin, adminController.deleteRestaurant)
 
+  // User後台
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
   app.get('/admin/users/:id', authenticatedAdmin, adminController.putUsers)
 
+  // Category後台
   app.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
+  app.post('/admin/categories', authenticatedAdmin, categoryController.postCategory)
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signup)

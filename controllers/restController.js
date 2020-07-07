@@ -21,7 +21,8 @@ const restController = {
           .then(categories => {
             return res.render('restaurants', {
               restaurants: data,
-              categories: categories
+              categories: categories,
+              categoryId: categoryId
             })
           })
       })

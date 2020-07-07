@@ -18,8 +18,21 @@
   </div>
   <hr>
 </div>
+
 <br />
 <br />
+
+<form action="/comments" method="POST">
+  <div class="form-group">
+    <label for="text">留下評論：</label>
+    <textarea class="form-control" id="text" name="text" rows="3"></textarea>
+  </div>
+  <input type="hidden" name="restaurantId" value="{{restaurant.id}}" />
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+<br />
+
 <a href="javascript:history.back()">
   <button type="button" class="btn btn-primary">回上一頁</button>
 </a>

@@ -1,0 +1,22 @@
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img class="img-responsive center-block" src="{{profile.image}}" style="width: 300px;height: 300px;">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{profile.name}}</h5>
+        <p class="card-text">{{profile.email}}</p>
+        {{#ifCond user.id profile.id}}
+          <button type="button" class="btn btn-outline-primary">
+            <a href="/users/{{profile.id}}/edit">Edit</a>
+          </button>
+        {{/ifCond}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<a href="javascript:history.back()">
+  <button type="button" class="btn btn-primary">回上一頁</button>
+</a>

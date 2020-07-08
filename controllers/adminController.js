@@ -29,7 +29,7 @@ const adminController = {
 
   postRestaurant: (req, res) => {
     const { name, description, categoryId } = req.body
-    if (!name || description || categoryId) {
+    if (!name || !description || !categoryId) {
       req.flash('error_messages', '最少要填入餐廳名子、類別與介紹！')
       return res.redirect('back')
     }
@@ -92,7 +92,7 @@ const adminController = {
 
   putRestaurant: (req, res) => {
     const { name, description, categoryId } = req.body
-    if (!name || description || categoryId) {
+    if (!name || !description || !categoryId) {
       req.flash('error_messages', '最少要填入餐廳名子、類別與介紹！')
       return res.redirect('back')
     }

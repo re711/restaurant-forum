@@ -37,13 +37,13 @@
         <th scope="row">{{this.id}}</th>
         <td>{{this.name}}</td>
         <td>
-          <button type="button" class="btn btn-link">
+          <button type="button" class="btn btn-outline-primary">
             <a href="/admin/categories/{{this.id}}">
               Edit
             </a>
           </button>
           <form action="/admin/categories/{{this.id}}?_method=DELETE" method="POST" style="display: inline;" onsubmit="return confirm('確定要刪除嗎？')">
-            <button type="submit" class="btn btn-link">Delete</button>
+            <button type="submit" class="btn btn-outline-danger">Delete</button>
           </form>
         </td>
       </tr>

@@ -18,8 +18,9 @@
  ```
   IMGUR_CLIENT_ID=你的應用程式編號
  ```
- 5. 設定種子資料
+ 5. 初始化資料庫、新增種子資料
  ```
+  $ npx sequelize db:migrate
   $ npx sequelize db:seed:all
  ```
  5. 執行

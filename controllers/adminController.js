@@ -38,7 +38,7 @@ const adminController = {
       imgur.setClientID(IMGUR_CLIENT_ID)
       imgur.upload(file.path, (err, img) => {
         if (err) console.log('Error', err)
-        return Restaurant.create({
+        Restaurant.create({
           name: req.body.name,
           tel: req.body.tel,
           address: req.body.address,
@@ -49,7 +49,7 @@ const adminController = {
         }).then(restaurant => {
           req.flash('success_messages', '餐廳已成功創建')
           return res.redirect('/admin/restaurants')
-        })
+        }).catch((error) => console.log(error))
       })
     } else {
       return Restaurant.create({
@@ -117,6 +117,7 @@ const adminController = {
                 req.flash('success_messages', '餐廳已成功更新')
                 res.redirect('/admin/restaurants')
               })
+              .catch((error) => console.log(error))
           })
       })
     } else {

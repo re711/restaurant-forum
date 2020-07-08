@@ -1,4 +1,3 @@
-const fs = require('fs')
 const db = require('../models')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -38,6 +37,7 @@ const adminController = {
     if (file) {
       imgur.setClientID(IMGUR_CLIENT_ID)
       imgur.upload(file.path, (err, img) => {
+        if (err) console.log('Error', err)
         return Restaurant.create({
           name: req.body.name,
           tel: req.body.tel,
@@ -45,7 +45,7 @@ const adminController = {
           opening_hours: req.body.opening_hours,
           description: req.body.description,
           image: file ? img.data.link : null,
-          CategoryId: req.body.categoryId 
+          CategoryId: req.body.categoryId
         }).then(restaurant => {
           req.flash('success_messages', '餐廳已成功創建')
           return res.redirect('/admin/restaurants')
@@ -101,6 +101,7 @@ const adminController = {
     if (file) {
       imgur.setClientID(IMGUR_CLIENT_ID)
       imgur.upload(file.path, (err, img) => {
+        if (err) console.log('Error', err)
         return Restaurant.findByPk(req.params.id)
           .then(restaurant => {
             restaurant.update({
@@ -158,9 +159,12 @@ const adminController = {
   putUsers: (req, res) => {
     return User.findByPk(req.params.id)
       .then(user => {
-        user.update({
-          isAdmin: !user.isAdmin
-        })
+        if (req.user.id === Number(req.params.id)) {
+          req.flash('error_messages', '不能把自己改成平民！')
+          return res.redirect('back')
+        }
+        if (user.isAdmin) user.update({ isAdmin: false })
+        else user.update({ isAdmin: true })
       })
       .then(users => {
         req.flash('success_messages', '使用者權限變更成功')

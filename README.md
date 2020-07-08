@@ -18,6 +18,10 @@
  ```
   IMGUR_CLIENT_ID=你的應用程式編號
  ```
+ 5. 設定種子資料
+ ```
+  $ npx sequelize db:seed:all
+ ```
  5. 執行
  ``` 
   $ npm run dev

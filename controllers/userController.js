@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const Comment = db.Comment
+const Restaurant = db.Restaurant
 
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -51,9 +53,36 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    return User.findByPk(req.params.id)
-      .then(profile => {
-        return res.render('users/profile', { profile: profile.toJSON() })
+    const id = req.params.id
+    const pageLimit = 7
+    let offset = 0
+    if (req.query.page) {
+      offset = (req.query.page - 1) * pageLimit
+    }
+    Comment.findAndCountAll({ include: Restaurant, where: { UserId: id }, offset: offset, limit: pageLimit })
+      .then(result => {
+        const count = result.count
+        const page = Number(req.query.page) || 1
+        const pages = Math.ceil(count / pageLimit)
+        const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
+        const prev = page - 1 < 1 ? 1 : page - 1
+        const next = page + 1 > pages ? pages : page + 1
+        const comments = result.rows.map(r => ({
+          id: r.Restaurant.id,
+          image: r.Restaurant.image
+        }))
+        return User.findByPk(id)
+          .then(profile => {
+            return res.render('users/profile', {
+              profile: profile.toJSON(),
+              count: count,
+              page: page,
+              totalPage: totalPage,
+              prev: prev,
+              next: next,
+              comments: comments
+            })
+          })
       })
   },
 
@@ -75,6 +104,7 @@ const userController = {
     if (file) {
       imgur.setClientID(IMGUR_CLIENT_ID)
       imgur.upload(file.path, (err, img) => {
+        if (err) console.log('Error', err)
         return User.findByPk(req.user.id)
           .then(user => {
             user.update({
@@ -85,6 +115,7 @@ const userController = {
                 req.flash('success_messages', '個人檔案更新成功！')
                 res.redirect(`/users/${user.id}`)
               })
+              .catch((error) => console.log(error))
           })
       })
     } else {

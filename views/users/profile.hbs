@@ -7,6 +7,7 @@
       <div class="card-body">
         <h5 class="card-title">{{profile.name}}</h5>
         <p class="card-text">{{profile.email}}</p>
+        <p class="font-weight-bold">{{count}} 已評論餐廳</p>
         {{#ifCond user.id profile.id}}
           <button type="button" class="btn btn-outline-primary">
             <a href="/users/{{profile.id}}/edit">Edit</a>
@@ -15,6 +16,35 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="card border-dark mb-3">
+  <div class="card-header">{{count}} 已評論餐廳</div>
+  <div class="card-body text-dark">
+    {{#each comments}}
+      <a class="mx-1" href="/restaurants/{{this.id}}">
+        <img src="{{this.image}}" alt="" style="width: 80px;height: 80px;">
+      </a>
+    {{/each}}
+  </div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="/users/{{profile.id}}?page={{prev}}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+      </li>
+      {{#each totalPage}}
+        <li class="page-item {{#ifCond this ../page}}active {{/ifCond}}">
+          <a class="page-link" href="/users/{{../profile.id}}?page={{this}}">{{this}}</a>
+        </li>
+      {{/each}}
+        <a class="page-link" href="/users/{{profile.id}}?page={{next}}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+        </li>
+      </ul>
+    </nav> 
 </div>
 
 <a href="javascript:history.back()">

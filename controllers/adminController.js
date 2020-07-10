@@ -44,12 +44,13 @@ const adminController = {
           address: req.body.address,
           opening_hours: req.body.opening_hours,
           description: req.body.description,
-          image: file ? img.data.link : null,
+          image: img.data.link,
           CategoryId: req.body.categoryId
         }).then(restaurant => {
           req.flash('success_messages', '餐廳已成功創建')
           return res.redirect('/admin/restaurants')
-        }).catch((error) => console.log(error))
+        })
+          .catch((error) => console.log(error))
       })
     } else {
       return Restaurant.create({
@@ -65,6 +66,7 @@ const adminController = {
           req.flash('success_messages', '餐廳已成功創建')
           res.redirect('/admin/restaurants')
         })
+        .catch((error) => console.log(error))
     }
   },
 
@@ -110,7 +112,7 @@ const adminController = {
               address: req.body.address,
               opening_hours: req.body.opening_hours,
               description: req.body.description,
-              image: file ? img.data.link : restaurant.image,
+              image: img.data.link,
               CategoryId: req.body.categoryId
             })
               .then(restaurant => {
@@ -136,6 +138,7 @@ const adminController = {
               req.flash('success_messages', '餐廳已成功更新')
               res.redirect('/admin/restaurants')
             })
+            .catch((error) => console.log(error))
         })
     }
   },

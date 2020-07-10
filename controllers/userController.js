@@ -111,7 +111,7 @@ const userController = {
           .then(user => {
             user.update({
               name: req.body.name,
-              image: file ? img.data.link : user.image
+              image: img.data.link
             })
               .then(user => {
                 req.flash('success_messages', '個人檔案更新成功！')
@@ -131,6 +131,7 @@ const userController = {
               req.flash('success_messages', '個人檔案更新成功！')
               res.redirect(`/users/${user.id}`)
             })
+            .catch((error) => console.log(error))
         })
     }
   },

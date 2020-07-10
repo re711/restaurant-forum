@@ -111,7 +111,7 @@ const userController = {
           .then(user => {
             user.update({
               name: req.body.name,
-              image: img.data.link
+              image: file ? img.data.link : user.image
             })
               .then(user => {
                 req.flash('success_messages', '個人檔案更新成功！')

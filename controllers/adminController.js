@@ -44,7 +44,7 @@ const adminController = {
           address: req.body.address,
           opening_hours: req.body.opening_hours,
           description: req.body.description,
-          image: img.data.link,
+          image: file ? img.data.link : null,
           CategoryId: req.body.categoryId
         }).then(restaurant => {
           req.flash('success_messages', '餐廳已成功創建')
@@ -112,7 +112,7 @@ const adminController = {
               address: req.body.address,
               opening_hours: req.body.opening_hours,
               description: req.body.description,
-              image: img.data.link,
+              image: file ? img.data.link : restaurant.image,
               CategoryId: req.body.categoryId
             })
               .then(restaurant => {

@@ -98,7 +98,7 @@ const userController = {
   putUser: (req, res) => {
     console.log(req.body.name)
     if (!req.body.name) {
-      req.flash('error_messages', '名子不能空白！')
+      req.flash('error_messages', '名字不能空白！')
       return res.redirect('back')
     }
 

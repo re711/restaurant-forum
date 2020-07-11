@@ -36,6 +36,7 @@
 * 可以對餐廳留言評論
 * 可以編輯自己的個人資料
 * 可以瀏覽最新動態、顯示最新10筆餐廳及最新10筆評論
+* 可以加入最愛餐廳、Like/收藏/移除
 ### 後台
 * 只有網站管理者可以登入後台
 * 管理者可以在後台管理餐廳資料、變更使用者權限
@@ -44,8 +45,10 @@
 # 測試帳號
 發布於 Heroku 平台 https://restaurant-forum-express.herokuapp.com/signin
 ```
-email: root@example.com
-password: 12345678
+1. email: root@example.com 、 password: 12345678
+2. email: user1@example.com 、 password: 12345678
+3. email: user2@example.com 、 password: 12345678
+
 ```
 
 # 工具

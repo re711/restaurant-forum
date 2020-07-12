@@ -57,35 +57,23 @@ const userController = {
 
   getUser: (req, res) => {
     const id = req.params.id
-    const pageLimit = 7
-    let offset = 0
-    if (req.query.page) {
-      offset = (req.query.page - 1) * pageLimit
-    }
-    Comment.findAndCountAll({ include: Restaurant, where: { UserId: id }, offset: offset, limit: pageLimit })
-      .then(result => {
-        const count = result.count
-        const page = Number(req.query.page) || 1
-        const pages = Math.ceil(count / pageLimit)
-        const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
-        const prev = page - 1 < 1 ? 1 : page - 1
-        const next = page + 1 > pages ? pages : page + 1
-        const comments = result.rows.map(r => ({
+    User.findByPk(id, {
+      include: [
+        { model: Comment, include: [Restaurant] },
+        { model: Restaurant, as: 'FavoritedRestaurants' },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    })
+      .then(profile => {
+        const comments = profile.Comments.map(r => ({
           id: r.Restaurant.id,
           image: r.Restaurant.image
         }))
-        return User.findByPk(id)
-          .then(profile => {
-            return res.render('users/profile', {
-              profile: profile.toJSON(),
-              count: count,
-              page: page,
-              totalPage: totalPage,
-              prev: prev,
-              next: next,
-              comments: comments
-            })
-          })
+        return res.render('users/profile', {
+          profile: profile.toJSON(),
+          comments: comments
+        })
       })
   },
 

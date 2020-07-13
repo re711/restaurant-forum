@@ -48,7 +48,7 @@
     <div class="card border-dark mb-3">
       <div class="card-header">已評論餐廳: {{comments.length}}</div>
       <div class="card-body text-dark">
-        {{#each comments}}
+        {{#each commentSet}}
           <a href="/restaurants/{{this.id}}">
             <img src="{{this.image}}" alt="" style="width: 60px;height: 60px;margin: 5px 0px;">
           </a>

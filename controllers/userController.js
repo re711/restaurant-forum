@@ -70,9 +70,12 @@ const userController = {
           id: r.Restaurant.id,
           image: r.Restaurant.image
         }))
+        const commentSet = [...new Set(comments.map(
+          item => JSON.stringify(item)))].map(
+          item => JSON.parse(item))
         return res.render('users/profile', {
           profile: profile.toJSON(),
-          comments: comments
+          commentSet: commentSet
         })
       })
   },

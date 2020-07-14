@@ -18,6 +18,9 @@ const adminController = {
   },
 
   deleteRestaurant: (req, res) => {
+    adminService.deleteRestaurant(req, res, (data) => {
+      return res.json(data)
+    })
     return Restaurant.findByPk(req.params.id)
       .then(restaurant => {
         restaurant.destroy()

@@ -33,6 +33,20 @@ const categoryController = {
         })
     }
   },
+
+  putCategory: (req, res, callback) => {
+    if (!req.body.name) {
+      return callback({ status: 'error', message: '請輸入類別勿空白！'})
+    } else {
+      return Category.findByPk(req.params.id)
+        .then(category => {
+          category.update(req.body)
+        })
+        .then(category => {
+          return callback({ status: 'success', message: '類別已經成功更新！'})
+        })
+    }
+  }
 }
 
 module.exports = categoryController

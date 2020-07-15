@@ -20,6 +20,19 @@ const categoryController = {
       }
     })
   },
+
+  postCategory: (req, res, callback) => {
+    if (!req.body.name) {
+      return callback({ status: 'error', message: '請輸入類別勿空白！'})
+    } else {
+      return Category.create({
+        name: req.body.name
+      })
+        .then(category => {
+          return callback({ status: 'success', message: '類別已經成功創建！'})
+        })
+    }
+  },
 }
 
 module.exports = categoryController

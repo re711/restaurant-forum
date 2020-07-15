@@ -65,6 +65,54 @@ const adminService = {
     }
   },
 
+  putRestaurant: (req, res, callback) => {
+    const { name, description, categoryId } = req.body
+    if (!name || !description || !categoryId) {
+      return callback({ status: 'error', message: '最少要填入餐廳名子、類別與介紹！'})
+    }
+
+    const { file } = req
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
+        if (err) console.log('Error', err)
+        return Restaurant.findByPk(req.params.id)
+          .then(restaurant => {
+            restaurant.update({
+              name: req.body.name,
+              tel: req.body.tel,
+              address: req.body.address,
+              opening_hours: req.body.opening_hours,
+              description: req.body.description,
+              image: file ? img.data.link : restaurant.image,
+              CategoryId: req.body.categoryId
+            })
+              .then(restaurant => {
+                return callback({ status: 'success', message: '餐廳已成功更新！'})
+              })
+              .catch((error) => console.log(error))
+          })
+      })
+    } else {
+      return Restaurant.findByPk(req.params.id)
+        .then(restaurant => {
+          restaurant.update({
+            name: req.body.name,
+            tel: req.body.tel,
+            address: req.body.address,
+            opening_hours: req.body.opening_hours,
+            description: req.body.description,
+            image: restaurant.image,
+            CategoryId: req.body.categoryId
+          })
+            .then(restaurant => {
+              return callback({ status: 'success', message: '餐廳已成功更新！'})
+            })
+            .catch((error) => console.log(error))
+        })
+    }
+  },
+
   deleteRestaurant: (req, res, callback) => {
     return Restaurant.findByPk(req.params.id)
       .then(restaurant => {

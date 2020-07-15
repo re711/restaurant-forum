@@ -16,7 +16,7 @@ const categoryController = {
             })
           })
       } else {
-        callback({categories: categories})
+        callback({ categories: categories })
       }
     })
   },
@@ -46,6 +46,16 @@ const categoryController = {
           return callback({ status: 'success', message: '類別已經成功更新！'})
         })
     }
+  },
+
+  deleteCategory: (req, res, callback) => {
+    return Category.findByPk(req.params.id)
+      .then(category => {
+        category.destroy()
+          .then(category => {
+            callback({ status: 'success', message: '' })
+          })
+      })
   }
 }
 
